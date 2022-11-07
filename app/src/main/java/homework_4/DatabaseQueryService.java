@@ -13,7 +13,7 @@ public class DatabaseQueryService {
     private final PreparedStatement selectYoungestEldestWorkers;
     private final PreparedStatement selectLongestProject;
     public DatabaseQueryService() throws SQLException {
-        Connection conn = Database.getInstance().getConnection();//"./sql/find/find_max_salary_worker.sql"
+        Connection conn = Database.getInstance().getConnection();
         selectMaxSalaryWorker = conn.prepareStatement(new SqlLink().toLink("./sql/find/find_max_salary_worker.sql"));
         selectMaxProjectCountClient = conn.prepareStatement(new SqlLink().toLink("./sql/find/find_max_projects_client.sql"));
         selectPrintProjectPrices = conn.prepareStatement(new SqlLink().toLink("./sql/find/print_project_prices.sql"));
@@ -40,7 +40,7 @@ public class DatabaseQueryService {
             return null;
     }
 
-    public List<MaxProjectCountClient> find_max_projects_client(){//selectMaxProjectCountClient
+    public List<MaxProjectCountClient> find_max_projects_client(){
         List<MaxProjectCountClient> maxProjectCountClients = new ArrayList<MaxProjectCountClient>();
 
                 try (ResultSet rs = selectMaxProjectCountClient.executeQuery()){
@@ -60,7 +60,7 @@ public class DatabaseQueryService {
         return null;
     }
 
-    public List<PrintProjectPrices> print_project_prices(){//selectPrintProjectPrices
+    public List<PrintProjectPrices> print_project_prices(){
         List<PrintProjectPrices> printProjectPrices = new ArrayList<PrintProjectPrices>();
 
                 try (ResultSet rs = selectPrintProjectPrices.executeQuery()){
@@ -79,7 +79,7 @@ public class DatabaseQueryService {
         return null;
     }
 
-    public List<YoungestEldestWorkers> find_youngest_eldest_workers(){//selectYoungestEldestWorkers
+    public List<YoungestEldestWorkers> find_youngest_eldest_workers(){
         List<YoungestEldestWorkers> youngestEldestWorkers = new ArrayList<YoungestEldestWorkers>();
 
                 try (ResultSet rs = selectYoungestEldestWorkers.executeQuery()){
@@ -98,7 +98,7 @@ public class DatabaseQueryService {
         return null;
     }
 
-    public List<LongestProject> find_longest_project(){//selectLongestProject
+    public List<LongestProject> find_longest_project(){
         List<LongestProject> longestProjects = new ArrayList<LongestProject>();
 
                 try (ResultSet rs = selectLongestProject.executeQuery()){

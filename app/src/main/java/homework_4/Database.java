@@ -26,7 +26,7 @@ public class Database{
         return connection;
     }
 
-    public int executeUpdate(String sql){  //для команд зміни даних
+    public int executeUpdate(String sql){
         try (Statement st = connection.createStatement()) {
             return st.executeUpdate(sql);
         } catch (Exception ex){
