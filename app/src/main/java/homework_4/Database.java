@@ -11,7 +11,7 @@ public class Database{
     private Connection connection;
     private Database(){
         try {
-            String get = "jdbc:h2:./test2";
+            String get = "jdbc:h2:./test3";
             connection = DriverManager.getConnection(get);
 
         } catch (SQLException ex){
