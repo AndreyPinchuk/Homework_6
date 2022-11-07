@@ -12,6 +12,7 @@ public class SqlLink {
                     "\n",
                     Files.readAllLines(Paths.get(initDbFilename)));
         } catch (IOException e) {
+            System.out.println("No Link!!!");
             throw new RuntimeException(e);
         }
         return sql;
