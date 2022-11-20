@@ -7,11 +7,12 @@ import java.sql.Statement;
 
 public class Database{
     private static final Database INSTANCE = new Database();
+    private static final String get = "jdbc:h2:./test";
 
     private Connection connection;
     private Database(){
         try {
-            String get = "jdbc:h2:./test4";
+//            String get = "jdbc:h2:./test";
             connection = DriverManager.getConnection(get);
 
         } catch (SQLException ex){
@@ -24,6 +25,9 @@ public class Database{
     }
     public Connection getConnection(){
         return connection;
+    }
+    public String getAddressDB(){
+        return get;
     }
 
     public int executeUpdate(String sql){
