@@ -14,7 +14,6 @@ public class Database{
     private Connection connection;
     private Database(){
         try {
-//            String get = "jdbc:h2:./test";
             connection = DriverManager.getConnection(get);
         } catch (SQLException ex){
             ex.printStackTrace();
