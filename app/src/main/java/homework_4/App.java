@@ -9,6 +9,7 @@ public class App {
 
     public static void main(String[] args) throws SQLException {
 
+
         Database.flywayStart();
 
         System.out.println("\n повертає всіх клієнтів з БД у вигляді колекції об'єктів типу Client\n");

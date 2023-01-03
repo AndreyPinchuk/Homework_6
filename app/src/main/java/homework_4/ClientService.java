@@ -40,6 +40,7 @@ public class ClientService {
         );
     }
 
+
     //Перевірка на довжину ім'я
     private boolean validateName(String name) {
         if(name.length()<2 || name.length()>100)return false;
