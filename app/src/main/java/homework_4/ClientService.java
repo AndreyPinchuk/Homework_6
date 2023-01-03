@@ -20,7 +20,9 @@ public class ClientService {
         Connection conn = Database.getInstance().getConnection();
 
         insertClient = conn.prepareStatement(
-                "INSERT INTO CLIENT (NAME) VALUES (?)");
+                "INSERT INTO CLIENT (NAME) VALUES (?)",
+                new String[] {"ID"}
+        );
         selectMaxIdSt = conn.prepareStatement(
                 "SELECT max(id) AS maxId FROM client"
         );
@@ -39,49 +41,55 @@ public class ClientService {
     }
 
     //Перевірка на довжину ім'я
-    public boolean rightName(String name) {
-        if(name.length()<2 || name.length()>100){
-            try {
-                throw new Exception("Name is not nice");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println("Name is not nice");
-            return false;
-        } else {
+    private boolean validateName(String name) {
+        if(name.length()<2 || name.length()>100)return false;
             return true;
-        }
     }
+
     //додає нового клієнта з іменем name. Повертає ідентифікатор щойно створеного клієнта
     public long create(String name) throws SQLException {
-        if(rightName(name)){
+        if(validateName(name)){
             insertClient.setString(1, name);
             insertClient.executeUpdate();
+            long id;
+            try(ResultSet rs = insertClient.getGeneratedKeys()) {
+                rs.next();
+                id = rs.getLong("ID");
+            }
+            return id;
+        } else {
+            System.out.println("New client is not create! Rename please this client");
+            return 0;
         }
-        long id;
-        try(ResultSet rs = selectMaxIdSt.executeQuery()) {
-            rs.next();
-            id = rs.getLong("maxId");
-        }
-        return id;
     }
 
     //повертає назву клієнта з ідентифікатором id
     public String getById(long id) throws SQLException {
-        getByIdSt.setLong(1, id);
 
-        try (ResultSet rs = getByIdSt.executeQuery()){
-            if (!rs.next()) {
-                return null;
+        try(ResultSet rs1 = selectMaxIdSt.executeQuery()){
+            rs1.next();
+
+            if(id>0 && rs1.getLong("maxId")>=id){  //перевірка на придатність ід для подальшої роботи
+                getByIdSt.setLong(1, id);
+
+                try (ResultSet rs = getByIdSt.executeQuery()){
+                    if (!rs.next()) {
+                        return "No found client for this id = "+id;
+                    }
+
+                    return rs.getString("name");
+
+                }
+            } else {
+                return "This id("+id+") does not exist in the database";
             }
-
-            return rs.getString("name");
         }
+
     }
 
     //встановлює нове ім'я name для клієнта з ідентифікатором id
     public void setName(long id, String name) throws SQLException {
-        if(rightName(name)){
+        if(validateName(name)){
             updateClient.setString(1, name);
             updateClient.setLong(2, id);
 

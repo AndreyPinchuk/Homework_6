@@ -1,5 +1,7 @@
 package homework_4;;
 
+import org.flywaydb.core.Flyway;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +16,7 @@ public class Database{
         try {
 //            String get = "jdbc:h2:./test";
             connection = DriverManager.getConnection(get);
-
+            flywayStart();
         } catch (SQLException ex){
             ex.printStackTrace();
         }
@@ -28,6 +30,15 @@ public class Database{
     }
     public String getAddressDB(){
         return get;
+    }
+
+    public void flywayStart(){
+        Flyway flyway = Flyway
+                .configure()
+                .dataSource(getAddressDB(), null, null)
+                .load();
+
+        flyway.migrate();
     }
 
     public int executeUpdate(String sql){
