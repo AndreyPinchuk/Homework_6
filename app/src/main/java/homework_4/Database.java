@@ -32,7 +32,7 @@ public class Database{
         return get;
     }
 
-    public void flywayStart(){
+    private void flywayStart(){
         Flyway flyway = Flyway
                 .configure()
                 .dataSource(getAddressDB(), null, null)
