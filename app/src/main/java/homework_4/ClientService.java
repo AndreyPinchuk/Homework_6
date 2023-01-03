@@ -74,14 +74,16 @@ public class ClientService {
 
                 try (ResultSet rs = getByIdSt.executeQuery()){
                     if (!rs.next()) {
-                        return "No found client for this id = "+id;
+                        throw new SQLException("No found client for this id = "+id);
+//                        return "No found client for this id = "+id;
                     }
 
                     return rs.getString("name");
 
                 }
             } else {
-                return "This id("+id+") does not exist in the database";
+                throw new SQLException("This id("+id+") does not exist in the database");
+//                return "This id("+id+") does not exist in the database";
             }
         }
 
@@ -120,6 +122,6 @@ public class ClientService {
             ex.printStackTrace();
         }
 
-        return null;
+        return clients;
     }
 }

@@ -16,7 +16,6 @@ public class Database{
         try {
 //            String get = "jdbc:h2:./test";
             connection = DriverManager.getConnection(get);
-            flywayStart();
         } catch (SQLException ex){
             ex.printStackTrace();
         }
@@ -32,10 +31,10 @@ public class Database{
         return get;
     }
 
-    private void flywayStart(){
+    public static void flywayStart(){
         Flyway flyway = Flyway
                 .configure()
-                .dataSource(getAddressDB(), null, null)
+                .dataSource(getInstance().getAddressDB(), null, null)
                 .load();
 
         flyway.migrate();
